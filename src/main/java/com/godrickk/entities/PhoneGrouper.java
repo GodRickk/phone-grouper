@@ -8,7 +8,7 @@ import java.util.concurrent.*;
 public class PhoneGrouper {
     private static final int BUFFER_SIZE = 8192 * 1024;
     private static final int INITIAL_CAPACITY = 50_000;
-    private static final int BATCH_SIZE = 500;
+    private static final int BATCH_SIZE = 2500;
 
     private static class ProcessingContext {
         final List<Set<String>> groups = Collections.synchronizedList(new ArrayList<>());
@@ -193,9 +193,10 @@ public class PhoneGrouper {
                 cleanPart = part.substring(1, part.length() - 1);
             }
 
-            if (!cleanPart.matches("^[0-9]+$")) {
+            if (!cleanPart.matches("^[0-9]+(\\.[0-9]+)?$")) {
                 return false;
             }
+
         }
 
         return true;
